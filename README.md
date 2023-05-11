@@ -15,6 +15,8 @@ The solution provided here is to deploy a lightweight lambda that executes on a 
 * Reduces worry of accounts becoming cluttered
 * Improves deployment replayability / confidence with CI
 
+![basic illustration](doc/basic-illustration.png)
+
 ## Usage
 
 In order to use this tool, the following needs to be done:
@@ -81,4 +83,4 @@ test_stack.tags.set_tag("STACK_EXPIRY", (datetime.now() + timedelta(hours=3)).is
 There can be problems in ordering when you issue a delete of a stack that is depended upon by another stack.  Rather than try to analyse the dependency hierarchy per stack, the approach taken was to repeat execution of the destroyer until dependent stacks have been removed.
 
 
-![destroyer execution](doc/stack-destroyer.png)
+![depedency illustration](doc/depedency-illustration.png)
