@@ -12,12 +12,13 @@ def get_cron():
     this function exists because aws decided not to support standard cron
     determine which of day(month) or day(week) to use - defaults to day of month
     """
-    schedule = os.getenv("DESTROYER_SCHEDULE").split(' ')
-    list(map(lambda x : x if x!="*" else None, schedule))
+    schedule = os.getenv("DESTROYER_SCHEDULE").split(" ")
+    list(map(lambda x: x if x != "*" else None, schedule))
     if schedule[2] and schedule[4]:
         # aws doesn't support both days and weekdays like cron
-        schedule[4]=None
+        schedule[4] = None
     return schedule
+
 
 class CFDestroyer(Stack):
     def __init__(
@@ -86,6 +87,15 @@ class CFDestroyer(Stack):
         function.add_environment("STACK_EXPIRY_TAG", "STACK_EXPIRY")
 
         cron = get_cron()
-        rule = events.Rule(self, "DestroyerSchedule",
-        schedule=events.Schedule.cron(minute=cron[0],hour=cron[1],day=cron[2],month=cron[3],week_day=cron[4]))
-        rule.add_target(targets.LambdaFunction(function,retry_attempts=2))
+        rule = events.Rule(
+            self,
+            "DestroyerSchedule",
+            schedule=events.Schedule.cron(
+                minute=cron[0],
+                hour=cron[1],
+                day=cron[2],
+                month=cron[3],
+                week_day=cron[4],
+            ),
+        )
+        rule.add_target(targets.LambdaFunction(function, retry_attempts=2))

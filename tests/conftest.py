@@ -8,6 +8,7 @@ def pytest_generate_tests(metafunc):
     os.environ["CDK_DEFAULT_ACCOUNT"] = "9999999"
     os.environ["CDK_DEFAULT_REGION"] = "eu-west-1"
     os.environ["CF_STACK_DELETE_PREFIX"] = "*"
+    os.environ["DESTROYER_SCHEDULE"] = "* * * * *"
 
 
 def mock_empty_make_api_call(self, operation_name, kwarg):

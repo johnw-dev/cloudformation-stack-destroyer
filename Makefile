@@ -15,10 +15,13 @@ lint_check:
 	poetry run bandit -r function
 	poetry run safety check
 
-test: clean lint_check assets
+install:
+	poetry install
+
+test: clean assets lint_check
 	poetry run pytest tests
 
-assets: clean
+assets: clean install
 	mkdir assets
 	cp -r function assets/function
 
